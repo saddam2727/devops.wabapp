@@ -5,7 +5,7 @@
 
 <a href="https://ashokitech.com/online-training-schedules"> Click Here To See Radhakrishna IT Training Schedules</a>
   
-  <h2> Call Us : + 91 - 9494876745 </h2>
+  <h2> Call Us : + 91 9494876745 </h2>
 
 </body>
 </html>
