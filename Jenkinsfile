@@ -58,3 +58,48 @@ node('agent1') {
             }
         }
 }
+
+
+
+===============================================================
+
+
+pipeline {
+    agent any 
+    stages {
+        stage ('checkout code from github') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Radhakrishnaaaaa/devops.wabapp.git'
+            }
+        }
+        stage ('build the code') {
+            steps {
+                sh ''' mvn clean install '''
+            }
+        }
+        stage ('build the docker image') {
+            steps {
+                sh ''' docker build -t img1 . '''
+            }
+        }
+        stage ('change build tag') {
+            steps {
+                sh ''' docker tag img1 radhakrishnabadugu94/docker:version1 '''
+            }
+        }
+        stage ('push to dockerhub') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker') {
+                    sh ''' docker push radhakrishnabadugu94/docker:version1 '''
+                    }
+                }
+            }
+        }
+        stage ('deploy app in docker container') {
+            steps {
+                sh ''' docker run --name con2 -itd -p 8082:8080 radhakrishnabadugu94/docker:version1 '''
+            }
+        }
+    }
+}
